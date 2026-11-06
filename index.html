@@ -904,7 +904,7 @@ const SAMPLES={
 <script>
 (function(){
 /* ★ 게시판 서버(Supabase) 연결 정보: supabase_setup.sql 실행 후 아래 두 값을 채워 주세요 ★ */
-const CONFIG={SUPABASE_URL:'', SUPABASE_ANON_KEY:'',
+const CONFIG={SUPABASE_URL:'https://cwsvoaehcryrartgxbqz.supabase.co', SUPABASE_ANON_KEY:'sb_publishable_2qpLwzDKIV_un2GLKTmoeQ_PXQL36MC',
   /* ★ Firebase 콘솔 → 프로젝트 설정 → 내 앱(웹)의 firebaseConfig 값을 붙여넣으면 방문·이용 통계가 수집돼요 ★ */
   FIREBASE:{apiKey:'AIzaSyC64QmPuv3C-Q8Tm-vjAMBxfxrwFrVcGIs',authDomain:'i-love-cat.firebaseapp.com',projectId:'i-love-cat',storageBucket:'i-love-cat.firebasestorage.app',messagingSenderId:'374717155804',appId:'1:374717155804:web:353697eaf513290278e719',measurementId:'G-1SSY0WFVPK'}};
 const APP_URL=(/^https?:$/.test(location.protocol)&&!/claude\.ai|claudeusercontent|localhost|127\.0\.0\.1/.test(location.host))?location.origin+location.pathname:'https://grayash.github.io/i-love-cat/';
@@ -1258,7 +1258,7 @@ function mineGet(){ try{return JSON.parse(localStorage.getItem('catlabel_mine')|
 function mineAdd(id){ const a=mineGet(); if(!a.includes(id)) a.push(id); window.__mine=a; try{localStorage.setItem('catlabel_mine',JSON.stringify(a));}catch(e){} }
 async function sb(path,opts){
   const K=CONFIG.SUPABASE_ANON_KEY;
-  const r=await fetch(CONFIG.SUPABASE_URL.replace(/\/$/,'')+'/rest/v1/'+path,Object.assign({},opts,{headers:Object.assign({apikey:K,Authorization:'Bearer '+K,'Content-Type':'application/json'},(opts&&opts.headers)||{})}));
+  const r=await fetch(CONFIG.SUPABASE_URL.replace(/\/$/,'')+'/rest/v1/'+path,Object.assign({},opts,{headers:Object.assign({apikey:K,'Content-Type':'application/json'},/^eyJ/.test(K)?{Authorization:'Bearer '+K}:{},(opts&&opts.headers)||{})}));
   const txt=await r.text(); let j=null; try{j=txt?JSON.parse(txt):null;}catch(e){}
   if(!r.ok) throw new Error((j&&j.message)||('HTTP '+r.status));
   return j;
